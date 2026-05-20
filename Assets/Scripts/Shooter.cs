@@ -8,7 +8,7 @@ public class Shooter : MonoBehaviour
 
     void Update()
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
         {
             Instantiate(bulletPrefab, spawnPoint.position, spawnPoint.rotation);
         }

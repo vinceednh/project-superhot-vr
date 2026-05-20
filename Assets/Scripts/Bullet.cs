@@ -7,11 +7,12 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        float timeFactor = Time.timeScale; 
-        transform.position += transform.forward * speed * timeFactor * Time.deltaTime;
+        transform.position += transform.forward * speed * Time.deltaTime;
 
-        life -= Time.deltaTime;
+        life -= Time.unscaledDeltaTime;
         if (life <= 0)
+        {
             Destroy(gameObject);
+        }
     }
 }

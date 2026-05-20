@@ -2,41 +2,28 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
-    public CharacterController playerController;
-
     public float movingTimeScale = 1f;
-    public float idleTimeScale = 0.1f;
+    public float idleTimeScale = 0.05f;
     public float smooth = 5f;
+    public float velocityThreshold = 0.02f;
 
     float currentScale;
-    Vector3 lastPosition;
 
     void Start()
     {
-        if (playerController == null)
-        {
-            Debug.LogError("Player Controller not assigned!");
-            return;
-        }
-
-        lastPosition = playerController.transform.position;
+        currentScale = idleTimeScale;
     }
 
     void Update()
     {
-        // measure actual movement
-        float distanceMoved = Vector3.Distance(
-            playerController.transform.position,
-            lastPosition
-        );
+        Vector3 leftVel = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.LTouch);
+        Vector3 rightVel = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.RTouch);
 
-        lastPosition = playerController.transform.position;
-
-        bool isMoving = distanceMoved > 0.001f;
+        float maxVel = Mathf.Max(leftVel.magnitude, rightVel.magnitude);
+        bool isMoving = maxVel > velocityThreshold;
 
         float target = isMoving ? movingTimeScale : idleTimeScale;
-
-        currentScale = Mathf.Lerp(currentScale, target, Time.deltaTime * smooth);
+        currentScale = Mathf.Lerp(currentScale, target, Time.unscaledDeltaTime * smooth);
 
         Time.timeScale = currentScale;
         Time.fixedDeltaTime = 0.02f * currentScale;
