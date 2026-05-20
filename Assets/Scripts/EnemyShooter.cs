@@ -1,22 +1,25 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyShooter : MonoBehaviour
 {
     public GameObject bulletPrefab;
     public Transform spawnPoint;
     public float fireRate = 2f;
-    public float moveSpeed = 2f;
     public float stopDistance = 5f;
 
     float nextFireTime;
     Transform player;
     Animator animator;
+    NavMeshAgent agent;
     bool isDead = false;
 
     void Start()
     {
-        player = FindFirstObjectByType<OVRCameraRig>().transform;
+        OVRCameraRig rig = FindAnyObjectByType<OVRCameraRig>();
+        player = rig.centerEyeAnchor;
         animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     void Update()
@@ -25,24 +28,40 @@ public class EnemyShooter : MonoBehaviour
 
         float distance = Vector3.Distance(transform.position, player.position);
 
-        Vector3 direction = player.position - transform.position;
-        direction.y = 0;
-        transform.rotation = Quaternion.LookRotation(direction);
-
         if (distance > stopDistance)
         {
-            transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            agent.isStopped = false;
+            agent.updateRotation = false;
+            agent.SetDestination(player.position);
             animator.SetBool("isWalking", true);
             animator.SetBool("isShooting", false);
+
+            // rotate to match movement direction
+            if (agent.velocity.sqrMagnitude > 0.1f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(agent.velocity.normalized);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+            }
         }
         else
         {
+            agent.isStopped = true;
+            agent.updateRotation = false;
             animator.SetBool("isWalking", false);
             animator.SetBool("isShooting", true);
 
-            if (Time.time >= nextFireTime)
+            Vector3 faceDirection = player.position - transform.position;
+            faceDirection.y = 0;
+            if (faceDirection != Vector3.zero)
+                transform.rotation = Quaternion.Slerp(
+                    transform.rotation,
+                    Quaternion.LookRotation(faceDirection),
+                    Time.unscaledDeltaTime * 5f
+                );
+
+            if (Time.unscaledTime >= nextFireTime)
             {
-                nextFireTime = Time.time + fireRate;
+                nextFireTime = Time.unscaledTime + fireRate;
                 Shoot();
             }
         }
@@ -51,16 +70,20 @@ public class EnemyShooter : MonoBehaviour
     void Shoot()
     {
         if (bulletPrefab == null || spawnPoint == null) return;
-        Instantiate(bulletPrefab, spawnPoint.position, spawnPoint.rotation);
+
+        Vector3 directionToPlayer = (player.position - spawnPoint.position).normalized;
+        Quaternion rotation = Quaternion.LookRotation(directionToPlayer);
+        Instantiate(bulletPrefab, spawnPoint.position, rotation);
     }
 
     public void Die()
     {
         if (isDead) return;
         isDead = true;
+        agent.enabled = false;
         animator.SetBool("isWalking", false);
         animator.SetBool("isShooting", false);
         animator.SetBool("Died", true);
-        Destroy(gameObject, 3f); // cleanup after death animation
+        Destroy(gameObject, 3f);
     }
-}
+}   
