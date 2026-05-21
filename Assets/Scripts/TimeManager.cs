@@ -4,14 +4,17 @@ public class TimeManager : MonoBehaviour
 {
     public float movingTimeScale = 1f;
     public float idleTimeScale = 0.05f;
-    public float smooth = 10f;
-    public float velocityThreshold = 0.005f;
+    public float velocityThreshold = 0.003f;
+    public float accelerateSpeed = 5f;
+    public float decelerateSpeed = 1f;
 
     float currentScale;
 
     void Start()
     {
         currentScale = idleTimeScale;
+        Time.timeScale = idleTimeScale;
+        Time.fixedDeltaTime = 0.02f * idleTimeScale;
     }
 
     void Update()
@@ -23,7 +26,9 @@ public class TimeManager : MonoBehaviour
         bool isMoving = maxVel > velocityThreshold;
 
         float target = isMoving ? movingTimeScale : idleTimeScale;
-        currentScale = Mathf.Lerp(currentScale, target, Time.unscaledDeltaTime * smooth);
+        float speed = isMoving ? accelerateSpeed : decelerateSpeed;
+
+        currentScale = Mathf.MoveTowards(currentScale, target, speed * Time.unscaledDeltaTime);
 
         Time.timeScale = currentScale;
         Time.fixedDeltaTime = 0.02f * currentScale;

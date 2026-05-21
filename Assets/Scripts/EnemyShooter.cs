@@ -5,10 +5,8 @@ public class EnemyShooter : MonoBehaviour
 {
     public GameObject bulletPrefab;
     public Transform spawnPoint;
-    public float fireRate = 2f;
     public float stopDistance = 5f;
 
-    float nextFireTime;
     Transform player;
     Animator animator;
     NavMeshAgent agent;
@@ -36,7 +34,6 @@ public class EnemyShooter : MonoBehaviour
             animator.SetBool("isWalking", true);
             animator.SetBool("isShooting", false);
 
-            // rotate to match movement direction
             if (agent.velocity.sqrMagnitude > 0.1f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(agent.velocity.normalized);
@@ -58,19 +55,13 @@ public class EnemyShooter : MonoBehaviour
                     Quaternion.LookRotation(faceDirection),
                     Time.unscaledDeltaTime * 5f
                 );
-
-            if (Time.unscaledTime >= nextFireTime)
-            {
-                nextFireTime = Time.unscaledTime + fireRate;
-                Shoot();
-            }
         }
     }
 
-    void Shoot()
+    public void Shoot()
     {
+        Debug.Log("Shoot called! bulletPrefab: " + bulletPrefab + " spawnPoint: " + spawnPoint + " player: " + player);
         if (bulletPrefab == null || spawnPoint == null) return;
-
         Vector3 directionToPlayer = (player.position - spawnPoint.position).normalized;
         Quaternion rotation = Quaternion.LookRotation(directionToPlayer);
         Instantiate(bulletPrefab, spawnPoint.position, rotation);
@@ -86,4 +77,4 @@ public class EnemyShooter : MonoBehaviour
         animator.SetBool("Died", true);
         Destroy(gameObject, 3f);
     }
-}   
+}
