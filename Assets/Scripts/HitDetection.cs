@@ -8,6 +8,7 @@ public class HitDetection : MonoBehaviour
         {
             Destroy(other.gameObject);
             GetComponent<EnemyShooter>().Die();
+            ScoreManager.instance.AddScore(5);
         }
     }
 }
