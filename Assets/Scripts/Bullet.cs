@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 20f;
-    public float life = 3f;
+    public float speed = 8f;
+    public float life = 9f;
 
     void Update()
     {

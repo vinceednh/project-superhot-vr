@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -149,10 +149,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeManager
   movingTimeScale: 1
-  idleTimeScale: 0.1
-  velocityThreshold: 0.02
-  accelerateSpeed: 5
-  decelerateSpeed: 1
+  idleTimeScale: 0.3
+  velocityThreshold: 0.15
+  accelerateSpeed: 4
+  decelerateSpeed: 1.5
 --- !u!4 &61656819
 Transform:
   m_ObjectHideFlags: 0
@@ -447,63 +447,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &940738425
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 344454808417064693, guid: f7d3c1527432a4ac29749105be2dc8ec, type: 3}
-      propertyPath: m_Name
-      value: Bullet
-      objectReference: {fileID: 0}
-    - target: {fileID: 7712171877687697676, guid: f7d3c1527432a4ac29749105be2dc8ec, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.2938
-      objectReference: {fileID: 0}
-    - target: {fileID: 7712171877687697676, guid: f7d3c1527432a4ac29749105be2dc8ec, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.781
-      objectReference: {fileID: 0}
-    - target: {fileID: 7712171877687697676, guid: f7d3c1527432a4ac29749105be2dc8ec, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.44135
-      objectReference: {fileID: 0}
-    - target: {fileID: 7712171877687697676, guid: f7d3c1527432a4ac29749105be2dc8ec, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7712171877687697676, guid: f7d3c1527432a4ac29749105be2dc8ec, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7712171877687697676, guid: f7d3c1527432a4ac29749105be2dc8ec, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7712171877687697676, guid: f7d3c1527432a4ac29749105be2dc8ec, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7712171877687697676, guid: f7d3c1527432a4ac29749105be2dc8ec, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7712171877687697676, guid: f7d3c1527432a4ac29749105be2dc8ec, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7712171877687697676, guid: f7d3c1527432a4ac29749105be2dc8ec, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f7d3c1527432a4ac29749105be2dc8ec, type: 3}
 --- !u!1 &953287804
 GameObject:
   m_ObjectHideFlags: 0
@@ -1406,6 +1349,8 @@ GameObject:
   - component: {fileID: 2599721380837776419}
   - component: {fileID: 2599721380837776420}
   - component: {fileID: 2599721380837776421}
+  - component: {fileID: 2599721380837776423}
+  - component: {fileID: 2599721380837776422}
   m_Layer: 0
   m_Name: CenterEyeAnchor
   m_TagString: MainCamera
@@ -1461,10 +1406,8 @@ GameObject:
   - component: {fileID: 2599721380830263857}
   - component: {fileID: 2599721380830263867}
   - component: {fileID: 2702898675380727167}
-  - component: {fileID: 2702898675380727169}
-  - component: {fileID: 2702898675380727168}
   m_Layer: 0
-  m_Name: OVRCameraRig (1)
+  m_Name: OVRCameraRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1543,8 +1486,8 @@ Camera:
   m_GameObject: {fileID: 2599721380837347289}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0.019607844}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1645,6 +1588,42 @@ MonoBehaviour:
   fadeColor: {r: 1, g: 1, b: 1, a: 1}
   fadeOnStart: 1
   renderQueue: 4500
+--- !u!136 &2599721380837776422
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2599721380837347289}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.05
+  m_Height: 0.1
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2599721380837776423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2599721380837347289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f87efa0e8a7174b0f822f40256d927f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHitDetection
+  centerEyeAnchor: {fileID: 2599721380837315577}
 --- !u!1 &2600739070956974805
 GameObject:
   m_ObjectHideFlags: 0
@@ -1891,42 +1870,6 @@ MonoBehaviour:
   - <Keyboard>/leftAlt
   - <Keyboard>/rightAlt
   - <Keyboard>/f2
---- !u!114 &2702898675380727168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2599721380837347295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f87efa0e8a7174b0f822f40256d927f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerHitDetection
-  centerEyeAnchor: {fileID: 0}
---- !u!136 &2702898675380727169
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2599721380837347295}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.15
-  m_Height: 0.3
-  m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4963352676793629310
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1994,6 +1937,5 @@ SceneRoots:
   - {fileID: 61656819}
   - {fileID: 980668500}
   - {fileID: 4963352676793629310}
-  - {fileID: 940738425}
   - {fileID: 1376086526}
   - {fileID: 1171589663}

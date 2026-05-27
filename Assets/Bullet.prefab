@@ -82,7 +82,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.01
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3207527448823213956
 MonoBehaviour:
@@ -96,8 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b9ad09540ced4a6db59ddd7a2f0dcd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
-  speed: 10
-  life: 3
+  speed: 2
+  life: 18
 --- !u!96 &744008522733608281
 TrailRenderer:
   serializedVersion: 4

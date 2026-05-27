@@ -14,11 +14,6 @@ public class PlayerHitDetection : MonoBehaviour
 
     void Update()
     {
-        if (centerEyeAnchor != null)
-        {
-            Vector3 localHead = transform.InverseTransformPoint(centerEyeAnchor.position);
-            capsule.center = new Vector3(0, localHead.y, localHead.z);
-        }
     }
 
     void OnTriggerEnter(Collider other)
