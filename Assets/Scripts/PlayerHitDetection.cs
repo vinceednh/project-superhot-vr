@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHitDetection : MonoBehaviour
 {
     public Transform centerEyeAnchor;
     CapsuleCollider capsule;
+    bool isDead = false;
 
     void Start()
     {
@@ -21,7 +23,7 @@ public class PlayerHitDetection : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Bullet"))
+        if (other.CompareTag("Bullet") && !isDead)
         {
             Destroy(other.gameObject);
             PlayerDie();
@@ -30,7 +32,16 @@ public class PlayerHitDetection : MonoBehaviour
 
     void PlayerDie()
     {
-        Debug.Log("Player died!");
-        // TODO: game over screen
+        isDead = true;
+        OVRScreenFade.instance.FadeOut();
+        StartCoroutine(RestartAfterDelay());
+    }
+
+    System.Collections.IEnumerator RestartAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        Time.timeScale = 1f;
+        OVRScreenFade.instance.FadeIn();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
