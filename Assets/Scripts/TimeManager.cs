@@ -4,9 +4,9 @@ public class TimeManager : MonoBehaviour
 {
     public float movingTimeScale = 1f;
     public float idleTimeScale = 0.05f;
-    public float velocityThreshold = 0.003f;
-    public float accelerateSpeed = 5f;
-    public float decelerateSpeed = 1f;
+    public float velocityThreshold = 0.05f;
+    public float accelerateSpeed = 3f;
+    public float decelerateSpeed = 0.5f;
 
     float currentScale;
 
