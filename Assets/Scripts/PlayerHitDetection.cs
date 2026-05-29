@@ -16,8 +16,15 @@ public class PlayerHitDetection : MonoBehaviour
     {
     }
 
+    public void TakeDamage()
+    {
+        if (!isDead)
+            PlayerDie();
+    }
+
     void OnTriggerEnter(Collider other)
     {
+
         if (other.CompareTag("Bullet") && !isDead)
         {
             Destroy(other.gameObject);

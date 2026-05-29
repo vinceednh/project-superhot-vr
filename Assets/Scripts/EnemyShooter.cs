@@ -10,6 +10,7 @@ public class EnemyShooter : MonoBehaviour
     Transform player;
     Animator animator;
     NavMeshAgent agent;
+    Rigidbody[] rBodies;
     bool isDead = false;
 
     void Start()
@@ -18,6 +19,13 @@ public class EnemyShooter : MonoBehaviour
         player = rig.centerEyeAnchor;
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+
+        rBodies = GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in rBodies)
+        {
+            rb.isKinematic = true;
+            rb.linearDamping = 2f;
+        }
     }
 
     void Update()
@@ -53,28 +61,38 @@ public class EnemyShooter : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(
                     transform.rotation,
                     Quaternion.LookRotation(faceDirection),
-                    Time.unscaledDeltaTime * 5f
+                    Time.deltaTime * 5f
                 );
         }
     }
 
-    public void Shoot()
+    public void EnemyFire()
     {
-        Debug.Log("Shoot called! bulletPrefab: " + bulletPrefab + " spawnPoint: " + spawnPoint + " player: " + player);
         if (bulletPrefab == null || spawnPoint == null) return;
         Vector3 directionToPlayer = (player.position - spawnPoint.position).normalized;
         Quaternion rotation = Quaternion.LookRotation(directionToPlayer);
-        Instantiate(bulletPrefab, spawnPoint.position, rotation);
+        GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, rotation);
+        bullet.layer = LayerMask.NameToLayer("EnemyBullet");
     }
 
-    public void Die()
+    public void Die(Vector3 hitPoint, Vector3 hitDirection, float force, Rigidbody hitRb)
     {
         if (isDead) return;
         isDead = true;
         agent.enabled = false;
-        animator.SetBool("isWalking", false);
-        animator.SetBool("isShooting", false);
-        animator.SetBool("Died", true);
+        animator.enabled = false;
+
+        foreach (Rigidbody rb in rBodies)
+        {
+            rb.isKinematic = false;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        Rigidbody target = hitRb ?? rBodies[0];
+        if (target != null)
+            target.AddForce(hitDirection * force, ForceMode.Impulse);
+
         Destroy(gameObject, 3f);
     }
 }
