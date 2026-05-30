@@ -16,7 +16,11 @@ public class EnemyShooter : MonoBehaviour
     void Start()
     {
         OVRCameraRig rig = FindAnyObjectByType<OVRCameraRig>();
-        player = rig.centerEyeAnchor;
+        if (rig != null)
+            player = rig.centerEyeAnchor;
+        else
+            player = Camera.main.transform;
+        
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
