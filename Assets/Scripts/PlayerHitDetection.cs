@@ -44,6 +44,6 @@ public class PlayerHitDetection : MonoBehaviour
         yield return new WaitForSecondsRealtime(1f);
         Time.timeScale = 1f;
         OVRScreenFade.instance.FadeIn();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(2);
     }
 }

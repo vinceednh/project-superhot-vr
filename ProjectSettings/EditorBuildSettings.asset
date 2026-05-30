@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/superhot-vr.unity
     guid: e8dae2377293247ed956a18ee729e1e7
+  - enabled: 1
+    path: Assets/Scenes/EndScene.unity
+    guid: b5982f5f65f4ad144abd78e819eeff7b
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 22fcdf2bdada240d8855c5c170a6dabc, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

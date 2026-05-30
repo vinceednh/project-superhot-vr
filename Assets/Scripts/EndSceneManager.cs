@@ -3,14 +3,17 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using System.Collections;
 using TMPro;
-public class StartSceneManager : MonoBehaviour
+
+public class EndSceneManager : MonoBehaviour
 {
-    public CanvasGroup titleGroup;
+    public CanvasGroup endGroup;
+    public TMP_Text scoreText;
     public float fadeDuration = 2f;
 
     void Start()
     {
-        titleGroup.alpha = 0f;
+        endGroup.alpha = 0f;
+        scoreText.text = "Score: " + ScoreManager.instance.GetScore();
         StartCoroutine(FadeIn());
     }
 
@@ -20,22 +23,24 @@ public class StartSceneManager : MonoBehaviour
         while (elapsed < fadeDuration)
         {
             elapsed += Time.deltaTime;
-            titleGroup.alpha = elapsed / fadeDuration;
+            endGroup.alpha = elapsed / fadeDuration;
             yield return null;
         }
-        titleGroup.alpha = 1f;
+        endGroup.alpha = 1f;
     }
 
     void Update()
     {
         if (OVRInput.GetDown(OVRInput.Button.One) || Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            StartGame();
+            PlayAgain();
         }
     }
 
-    public void StartGame()
+    public void PlayAgain()
     {
+        if (ScoreManager.instance != null)
+            ScoreManager.instance.ResetScore();
         SceneManager.LoadScene(1);
     }
 }
