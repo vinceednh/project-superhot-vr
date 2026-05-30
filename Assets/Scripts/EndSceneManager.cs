@@ -8,12 +8,19 @@ public class EndSceneManager : MonoBehaviour
 {
     public CanvasGroup endGroup;
     public TMP_Text scoreText;
+    public TMP_Text waveText; 
     public float fadeDuration = 2f;
 
     void Start()
     {
         endGroup.alpha = 0f;
-        scoreText.text = "Score: " + ScoreManager.instance.GetScore();
+        
+        scoreText.text = "score: " + ScoreManager.instance.GetScore();
+        
+        WaveManager waveManager = FindAnyObjectByType<WaveManager>();
+        if (waveManager != null)
+            waveText.text = "wave: " + waveManager.currentWave;
+        
         StartCoroutine(FadeIn());
     }
 

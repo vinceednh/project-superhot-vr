@@ -13,6 +13,7 @@ public class WaveManager : MonoBehaviour
 
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
         StartCoroutine(StartNextWave());
     }
 
