@@ -1,8 +1,15 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/skybox.mat.meta
 guid: bf19603a0ab795f48b095d71c6951d0d
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000
+========
+guid: 9ff3755010e450448806b5979ba6541c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 23800000
+>>>>>>>> a203d85f60f711e0f9bb81d209bdd1071ac4747b:Assets/Scenes/superhot-vr/NavMesh-NavMesh Surface 1.asset.meta
   userData: 
   assetBundleName: 
   assetBundleVariant: 
