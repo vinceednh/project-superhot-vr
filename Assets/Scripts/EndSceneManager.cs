@@ -48,6 +48,8 @@ public class EndSceneManager : MonoBehaviour
     {
         if (ScoreManager.instance != null)
             ScoreManager.instance.ResetScore();
+        if (WaveManager.instance != null)
+            WaveManager.instance.ResetWaves();
         SceneManager.LoadScene(1);
     }
 }

@@ -3,6 +3,8 @@ using System.Collections;
 
 public class WaveManager : MonoBehaviour
 {
+    public static WaveManager instance;
+
     public GameObject enemyPrefab;
     public float spawnInterval = 5f;
     public int currentWave = 0;
@@ -10,9 +12,21 @@ public class WaveManager : MonoBehaviour
 
     bool waveInProgress = false;
 
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
         StartCoroutine(StartNextWave());
     }
 
@@ -55,5 +69,14 @@ public class WaveManager : MonoBehaviour
         enemiesAlive = Mathf.Max(0, enemiesAlive - 1);
         if (enemiesAlive <= 0)
             StartCoroutine(StartNextWave());
+    }
+
+    public void ResetWaves()
+    {
+        StopAllCoroutines();
+        currentWave = 0;
+        enemiesAlive = 0;
+        waveInProgress = false;
+        StartCoroutine(StartNextWave());
     }
 }

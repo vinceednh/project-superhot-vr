@@ -20,7 +20,7 @@ public class EnemyShooter : MonoBehaviour
             player = rig.centerEyeAnchor;
         else
             player = Camera.main.transform;
-        
+
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
@@ -96,6 +96,9 @@ public class EnemyShooter : MonoBehaviour
         Rigidbody target = hitRb ?? rBodies[0];
         if (target != null)
             target.AddForce(hitDirection * force, ForceMode.Impulse);
+
+        if (WaveManager.instance != null)
+            WaveManager.instance.OnEnemyDied();
 
         Destroy(gameObject, 3f);
     }

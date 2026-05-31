@@ -22,10 +22,6 @@ public class HitDetection : MonoBehaviour
 
             if (ScoreManager.instance != null)
                 ScoreManager.instance.AddScore(1);
-
-            WaveManager waveManager = FindAnyObjectByType<WaveManager>();
-            if (waveManager != null)
-                waveManager.OnEnemyDied();
         }
     }
 }
