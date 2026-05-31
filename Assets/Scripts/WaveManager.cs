@@ -4,7 +4,6 @@ using System.Collections;
 public class WaveManager : MonoBehaviour
 {
     public GameObject enemyPrefab;
-    public Transform[] spawnPoints;
     public float spawnInterval = 5f;
     public int currentWave = 0;
     public int enemiesAlive = 0;
@@ -17,9 +16,19 @@ public class WaveManager : MonoBehaviour
         StartCoroutine(StartNextWave());
     }
 
+    Transform[] GetSpawnPoints()
+    {
+        GameObject spawners = GameObject.Find("Spawners");
+        if (spawners == null) return new Transform[0];
+        Transform[] points = new Transform[spawners.transform.childCount];
+        for (int i = 0; i < spawners.transform.childCount; i++)
+            points[i] = spawners.transform.GetChild(i);
+        return points;
+    }
+
     IEnumerator StartNextWave()
     {
-        if (waveInProgress) yield break; // stop if wave already running
+        if (waveInProgress) yield break;
         waveInProgress = true;
 
         yield return new WaitForSeconds(spawnInterval);
@@ -29,6 +38,9 @@ public class WaveManager : MonoBehaviour
 
     void SpawnWave(int enemyCount)
     {
+        Transform[] spawnPoints = GetSpawnPoints();
+        if (spawnPoints.Length == 0) return;
+
         enemiesAlive = enemyCount;
         for (int i = 0; i < enemyCount; i++)
         {
@@ -42,6 +54,6 @@ public class WaveManager : MonoBehaviour
     {
         enemiesAlive = Mathf.Max(0, enemiesAlive - 1);
         if (enemiesAlive <= 0)
-            StartCoroutine(StartNextWave()); // only triggers when all dead
+            StartCoroutine(StartNextWave());
     }
 }

@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     public float hitForce = 8f;
 
     GameObject owner;
-    float ignoreTime = 0.1f;
+    float ignoreTime = 0.3f;
 
     public void SetOwner(GameObject ownerObject)
     {
