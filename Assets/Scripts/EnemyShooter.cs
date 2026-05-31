@@ -97,6 +97,9 @@ public class EnemyShooter : MonoBehaviour
         if (target != null)
             target.AddForce(hitDirection * force, ForceMode.Impulse);
 
+        if (ScoreManager.instance != null)
+            ScoreManager.instance.AddScore(1);
+
         if (WaveManager.instance != null)
             WaveManager.instance.OnEnemyDied();
 

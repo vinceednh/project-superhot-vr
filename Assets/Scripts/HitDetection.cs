@@ -19,9 +19,6 @@ public class HitDetection : MonoBehaviour
             EnemyShooter enemy = GetComponentInParent<EnemyShooter>();
             if (enemy != null)
                 enemy.Die(hitPoint, hitDirection, 5f, hitRb);
-
-            if (ScoreManager.instance != null)
-                ScoreManager.instance.AddScore(1);
         }
     }
 }
